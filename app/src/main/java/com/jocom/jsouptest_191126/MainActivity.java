@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         int status = NetworkStatus.getConnectivityStatus(getApplicationContext());
         if(status == NetworkStatus.TYPE_MOBILE || status == NetworkStatus.TYPE_WIFI) {
 
-            Toast.makeText(this, "네트워크 정상 연결됨", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "네트워크 연결됨", Toast.LENGTH_SHORT).show();
 
             System.out.println((cnt + 1) + "번째 파싱");
             JsoupAsyncTsk jsoupAsyncTsk = new JsoupAsyncTsk();
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             t.start();
 
         }else if (status == NetworkStatus.TYPE_NOT_CONNECTED){
-            Toast.makeText(this, "인터넷 미연결 상태", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "네트워크 연결 안 됨", Toast.LENGTH_SHORT).show();
             btn.setEnabled(true);
         }
 
