@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:src="@drawable/yuy"
+        android:contentDescription="TODO" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:padding="10dp"
+        android:background="@drawable/amu"
+        android:layout_weight="7"
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="650dp"
+        android:maxLines="100"
+        android:scrollbars="vertical" />
+
+    <LinearLayout
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+    <com.google.android.material.button.MaterialButton
+        android:gravity="center"
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="true"
+        android:onClick="clickBtn"
+        android:layout_marginRight="10dp"
+        android:text="뉴스 정보" />
+
+    <com.google.android.material.button.MaterialButton
+        android:gravity="center"
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="true"
+        android:onClick="clickBtn02"
+        android:text="사이트 이동" />
+
+    </LinearLayout>
+</LinearLayout>
