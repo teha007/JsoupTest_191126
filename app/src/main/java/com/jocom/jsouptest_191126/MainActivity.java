@@ -11,6 +11,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -65,15 +66,26 @@ public class MainActivity extends AppCompatActivity {
         btn.setEnabled(false);
 
         htmlContentInStringFormat = "";
+//        textviewHtmlDocument.setText("");
 
-        System.out.println((cnt + 1) + "번째 파싱");
-        JsoupAsyncTsk jsoupAsyncTsk = new JsoupAsyncTsk();
-        jsoupAsyncTsk.execute();
-        cnt++;
+        int status = NetworkStatus.getConnectivityStatus(getApplicationContext());
+        if(status == NetworkStatus.TYPE_MOBILE || status == NetworkStatus.TYPE_WIFI) {
 
+            Toast.makeText(this, "네트워크 정상 연결됨", Toast.LENGTH_SHORT).show();
 
-        t.setDaemon(true);
-        t.start();
+            System.out.println((cnt + 1) + "번째 파싱");
+            JsoupAsyncTsk jsoupAsyncTsk = new JsoupAsyncTsk();
+            jsoupAsyncTsk.execute();
+            cnt++;
+
+            t.setDaemon(true);
+            t.start();
+
+        }else if (status == NetworkStatus.TYPE_NOT_CONNECTED){
+            Toast.makeText(this, "인터넷 미연결 상태", Toast.LENGTH_SHORT).show();
+            btn.setEnabled(true);
+        }
+
 //        try {
 //            t.join();
 //        } catch (InterruptedException e) {
