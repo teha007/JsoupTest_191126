@@ -34,23 +34,33 @@
 
 
     <com.google.android.material.button.MaterialButton
-        android:gravity="center"
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:enabled="true"
         android:onClick="clickBtn"
         android:layout_marginRight="10dp"
-        android:text="뉴스 정보" />
+        android:text="뉴스" />
 
     <com.google.android.material.button.MaterialButton
-        android:gravity="center"
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:enabled="true"
         android:onClick="clickBtn02"
-        android:text="사이트 이동" />
+        android:layout_marginRight="10dp"
+        android:text="사이트" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_height="wrap_content"
+            android:onClick="clickshare"
+            android:text="공유"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_height="wrap_content"
+            android:text="내 정보"
+            android:layout_width="wrap_content" />
 
     </LinearLayout>
 </LinearLayout>

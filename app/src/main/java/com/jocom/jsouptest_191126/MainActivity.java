@@ -23,7 +23,7 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
 
     // 깃허브 내에서 2019.11.26 화요일 저녁 10:30분 수정
-    
+
     Thread t;
 
     Button btn;
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 //        textviewHtmlDocument.setText("");
 
         int status = NetworkStatus.getConnectivityStatus(getApplicationContext());
-        if(status == NetworkStatus.TYPE_MOBILE || status == NetworkStatus.TYPE_WIFI) {
+        if (status == NetworkStatus.TYPE_MOBILE || status == NetworkStatus.TYPE_WIFI) {
 
 //            Toast.makeText(this, "네트워크 연결됨", Toast.LENGTH_SHORT).show();
 
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             t.setDaemon(true);
             t.start();
 
-        }else if (status == NetworkStatus.TYPE_NOT_CONNECTED){
+        } else if (status == NetworkStatus.TYPE_NOT_CONNECTED) {
             Toast.makeText(this, "네트워크 연결 안 됨", Toast.LENGTH_SHORT).show();
             btn.setEnabled(true);
         }
@@ -97,48 +97,57 @@ public class MainActivity extends AppCompatActivity {
 
     public void clickBtn02(View view) {
         Intent intent = new Intent
-                (Intent.ACTION_VIEW, Uri.parse("http://www.yonhapnews.co.kr/")); startActivity(intent);
-
+                (Intent.ACTION_VIEW, Uri.parse("http://www.yonhapnews.co.kr/"));
+        startActivity(intent);
     }
 
-    private class JsoupAsyncTsk extends AsyncTask<Void, Void, Void> {
+    public void clickshare(View view) {
+        Intent shareintent = new Intent();
+        shareintent.setAction(Intent.ACTION_SEND);
+        shareintent.putExtra(Intent.EXTRA_TEXT, htmlContentInStringFormat);
 
-        @Override
-        protected void onPreExecute() {
-            dialog = new ProgressDialog(MainActivity.this);
-            dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            dialog.setMessage("콘텐츠 확인 중입니다.");
-            dialog.setMax(100);
-            dialog.show();
+        shareintent.setType("text/plain");
+        startActivity(shareintent);
+    }
 
-            dialog.setCanceledOnTouchOutside(false);
-            dialog.show();
+private class JsoupAsyncTsk extends AsyncTask<Void, Void, Void> {
 
-            dialog.setProgress(gauge);
+    @Override
+    protected void onPreExecute() {
+        dialog = new ProgressDialog(MainActivity.this);
+        dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        dialog.setMessage("콘텐츠 확인 중입니다.");
+        dialog.setMax(100);
+        dialog.show();
 
-            t = new Thread() {
-                @Override
-                public void run() {
-                    gauge = 0;
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
 
-                    while (gauge < 100) {
-                        gauge++;
-                        dialog.setProgress(gauge);
+        dialog.setProgress(gauge);
 
-                        //50ms(0.05초) 대기
-                        try {
+        t = new Thread() {
+            @Override
+            public void run() {
+                gauge = 0;
+
+                while (gauge < 100) {
+                    gauge++;
+                    dialog.setProgress(gauge);
+
+                    //50ms(0.05초) 대기
+                    try {
 //                            Thread.sleep(50);
-                            Thread.sleep(10);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }//while
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }//while
 
-                    dialog.dismiss();
-                    dialog = null;
+                dialog.dismiss();
+                dialog = null;
 
-                }
-            };
+            }
+        };
 
 
 //            try {
@@ -147,64 +156,64 @@ public class MainActivity extends AppCompatActivity {
 //                e.printStackTrace();
 //            }
 
-            super.onPreExecute();
+        super.onPreExecute();
 
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-
-            int ccnt = 0;
-            int ccnt2 = 0;
-            int ccnt3 = 0;
-
-            try {
-
-                Document doc = Jsoup.connect(htmlPageUrl).get();
-
-                //테스트1
-                Elements titles = doc.select("div.news-con h1.tit-news");
-                System.out.println("-------------------------------------------------------------");
-                for (Element e : titles) {
-                    ccnt++;
-                    System.out.println("title: " + e.text());
-                    htmlContentInStringFormat += "연합 Head >>> " + ccnt + "번" + "\n" + e.text().trim() + "\n\n";
-                }
-
-                //테스트2
-                titles = doc.select("div.news-con h2.tit-news");
-
-                System.out.println("-------------------------------------------------------------");
-                for (Element e : titles) {
-                    ccnt2++;
-                    System.out.println("title: " + e.text());
-                    htmlContentInStringFormat += "연합 Main >> " + ccnt2 + "번" + "\n" + e.text().trim() + "\n\n";
-                }
-
-                //테스트3
-                titles= doc.select("li.section02 div.con h2.news-tl");
-
-                System.out.println("-------------------------------------------------------------");
-                for(Element e: titles){
-                    ccnt3++;
-                    System.out.println("title: " + e.text());
-                    htmlContentInStringFormat += "연합 Sub > " + ccnt3 + "번" + "\n" + e.text().trim() + "\n\n";
-                }
-                System.out.println("-------------------------------------------------------------");
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-
-        }
-
-
-        @Override
-        protected void onPostExecute(Void result) {
-
-            textviewHtmlDocument.setText(htmlContentInStringFormat);
-            btn.setEnabled(true);
-        }
     }
+
+    @Override
+    protected Void doInBackground(Void... params) {
+
+        int ccnt = 0;
+        int ccnt2 = 0;
+        int ccnt3 = 0;
+
+        try {
+
+            Document doc = Jsoup.connect(htmlPageUrl).get();
+
+            //테스트1
+            Elements titles = doc.select("div.news-con h1.tit-news");
+            System.out.println("-------------------------------------------------------------");
+            for (Element e : titles) {
+                ccnt++;
+                System.out.println("title: " + e.text());
+                htmlContentInStringFormat += "연합 Head >>> " + ccnt + "번" + "\n" + e.text().trim() + "\n\n";
+            }
+
+            //테스트2
+            titles = doc.select("div.news-con h2.tit-news");
+
+            System.out.println("-------------------------------------------------------------");
+            for (Element e : titles) {
+                ccnt2++;
+                System.out.println("title: " + e.text());
+                htmlContentInStringFormat += "연합 Main >> " + ccnt2 + "번" + "\n" + e.text().trim() + "\n\n";
+            }
+
+            //테스트3
+            titles = doc.select("li.section02 div.con h2.news-tl");
+
+            System.out.println("-------------------------------------------------------------");
+            for (Element e : titles) {
+                ccnt3++;
+                System.out.println("title: " + e.text());
+                htmlContentInStringFormat += "연합 Sub > " + ccnt3 + "번" + "\n" + e.text().trim() + "\n\n";
+            }
+            System.out.println("-------------------------------------------------------------");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+
+    @Override
+    protected void onPostExecute(Void result) {
+
+        textviewHtmlDocument.setText(htmlContentInStringFormat);
+        btn.setEnabled(true);
+    }
+}
 }
