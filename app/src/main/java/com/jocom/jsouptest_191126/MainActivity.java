@@ -22,6 +22,8 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
+    // 깃허브 내에서 2019.11.26 화요일 저녁 10:30분 수정
+    
     Thread t;
 
     Button btn;
