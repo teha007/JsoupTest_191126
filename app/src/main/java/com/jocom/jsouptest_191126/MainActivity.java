@@ -1,17 +1,19 @@
 package com.jocom.jsouptest_191126;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.sdsmdg.tastytoast.TastyToast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -74,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
         if (status == NetworkStatus.TYPE_MOBILE || status == NetworkStatus.TYPE_WIFI) {
 
 //            Toast.makeText(this, "네트워크 연결됨", Toast.LENGTH_SHORT).show();
+            TastyToast.makeText(getApplicationContext(), "오늘의 뉴스", TastyToast.LENGTH_LONG, TastyToast.SUCCESS)
+                    .setGravity(Gravity.CENTER, 0, 200);
 
             System.out.println((cnt + 1) + "번째 파싱");
             JsoupAsyncTsk jsoupAsyncTsk = new JsoupAsyncTsk();
@@ -84,7 +88,9 @@ public class MainActivity extends AppCompatActivity {
             t.start();
 
         } else if (status == NetworkStatus.TYPE_NOT_CONNECTED) {
-            Toast.makeText(this, "네트워크 연결 안 됨", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "네트워크 연결 안 됨", Toast.LENGTH_SHORT).show();
+            TastyToast.makeText(getApplicationContext(), "네트워크 X", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+
             btn.setEnabled(true);
         }
 
